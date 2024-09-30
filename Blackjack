@@ -1,0 +1,99 @@
+from random import randint
+def print_card_name(card_rank): 
+    if card_rank > 13:
+        print("BAD CARD")
+    if card_rank == 1:
+        print("Drew an Ace")
+
+    elif card_rank == 11:
+        print("Drew a Jack")
+        
+    elif card_rank == 12:
+        print("Drew a Queen")
+        
+    elif card_rank == 13:
+        print("Drew a King")
+
+    elif card_rank == 8:
+        print("Drew an 8")
+        
+    elif card_rank != 1 and card_rank != 11 and card_rank != 12 and card_rank != 13 and card_rank != 8:
+        print(f"Drew a {card_rank}")
+
+def draw_card():
+    card_rank = randint(1,13)
+    print_card_name(card_rank)
+    if card_rank == 1:
+        return 11
+    elif card_rank == 11 or card_rank == 12 or card_rank == 13:
+        return 10
+    return card_rank
+def print_header(message):
+    print("-----------")
+    print(message.upper())
+    print("-----------")         
+
+def draw_starting_hand(name):
+    print_header(name.upper() + " TURN")
+    first = draw_card()
+    second = draw_card()
+    return second + first
+    
+def print_end_turn_status(hand_value):
+    print(f"Final hand: {hand_value}.")
+    if hand_value > 21:
+        print("BUST.")
+    if hand_value == 21:
+        print("BLACKJACK!")
+
+def print_end_game_status(user_hand, dealer_hand):
+    # Implement print_end_game_status function here
+    print_header("Game result")
+    if user_hand > 21:
+        print("Dealer wins!")
+    elif user_hand > dealer_hand:
+        print("You win!")
+    elif dealer_hand > user_hand and dealer_hand < 21:
+        print("Dealer wins!")
+    elif dealer_hand > user_hand and dealer_hand > 21:
+        print("You win!")
+    elif dealer_hand > user_hand:
+        print("Dealer wins!")
+
+    elif dealer_hand == user_hand:
+        print("Push.")
+
+
+draw = 0
+first = draw_starting_hand("Your")
+draw += first
+
+
+while draw < 21:
+   answer = input( f"You have {draw}. Hit (y/n)? ")
+   if answer == "n":
+      break
+   elif answer == "y":
+      third_draw = draw_card()
+      draw += int(third_draw)
+   else:
+         print("Sorry I didn't get that")
+print_end_turn_status(draw)
+draw2 = 0
+second  = draw_starting_hand("Dealer")
+draw2 += second
+if draw2 >= 17 and draw2 < 21 :
+      print_end_turn_status(draw2)
+else:
+   while draw2 < 21:
+      print(f"Dealer has {draw2}.")
+      third_draw = draw_card()
+      draw2 += third_draw
+   if draw2 >= 17 and draw2 < 21 :
+      print_end_turn_status(draw2)
+
+if draw2 >= 21:
+   print_end_turn_status(draw2)
+
+print_end_game_status(draw, draw2)
+
